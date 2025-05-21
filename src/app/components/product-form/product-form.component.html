@@ -1,0 +1,56 @@
+<div class="container mt-4">
+<form [formGroup]="productForm" (ngSubmit)="onSubmit()" class="border p-3 mb-3">
+  <h5>{{ isEditMode ? 'Edit Product' : 'Create Product' }}</h5>
+<div class="row">
+  <div class="mb-3 col-6">
+    <label class="form-label">Product Name</label>
+    <input formControlName="productName" class="form-control" />
+  </div>
+  <div class="mb-3 col-6">
+    <label class="form-label">Product Code</label>
+    <input formControlName="productCode" class="form-control" />
+  </div>
+  <div class="mb-3 col-6">
+    <label class="form-label">Available Quantity</label>
+    <input
+      type="number"
+      formControlName="availableQuantity"
+      class="form-control"
+    />
+  </div>
+  <div class="mb-3 col-6">
+    <label class="form-label">Buying Price</label>
+    <input type="number" formControlName="buyingPrice" class="form-control" />
+  </div>
+  <div class="mb-3 col-6">
+    <label class="form-label">Selling Price</label>
+    <input
+      type="number"
+      formControlName="sellingPrice"
+      class="form-control"
+    />
+  </div>
+  <div class="mb-3 col-6">
+    <label class="form-label">Reorder Level</label>
+    <input type="number" formControlName="reorderLevel" class="form-control" />
+  </div>
+</div>
+  <button
+    type="submit"
+    class="btn btn-primary me-2"
+    [disabled]="productForm.invalid"
+  >
+    {{ isEditMode ? 'Update' : 'Create' }}
+  </button>
+  <button
+    type="button"
+    class="btn btn-dark"
+    (click)="onCancel()"
+    *ngIf="isEditMode"
+  >
+    Cancel
+  </button>
+</form>
+
+</div>
+

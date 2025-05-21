@@ -1,0 +1,102 @@
+<div class="container mt-4">
+  <h2 class="mb-4">Products Management</h2>
+
+  <div class="input-group mb-3">
+    <input
+      [(ngModel)]="searchText"
+      (ngModelChange)="searchProducts(searchText)"
+      (keyup.enter)="clearSearch()"
+      type="search"
+      placeholder="Search by Name...."
+      class="form-control w-75 mx-auto mt-5"
+    />
+  </div>
+
+  <div class="d-flex justify-content-start mb-3">
+    <button class="btn btn-primary" [routerLink]="['/productForm']">
+      Create New Product
+    </button>
+
+    <button class="btn btn-outline-secondary ms-2" (click)="toggleLowStock()">
+      {{ showingLowStock ? 'Show All Products' : 'Show Low Stock Products' }}
+    </button>
+  </div>
+
+  <div *ngIf="products.length === 0" class="d-flex justify-content-center align-items-center" style="height: 200px;">
+    <h4 class="text-muted">No products found</h4>
+  </div>
+
+  <table *ngIf="products.length > 0" class="table table-bordered table-striped">
+    <thead class="table-light">
+      <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Code</th>
+        <th>Quantity</th>
+        <th>Buying</th>
+        <th>Selling</th>
+        <th>Restock Threshold</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        *ngFor="let product of pagedProducts"
+        [ngClass]="{
+          'table-danger': product.availableQuantity <= product.reorderLevel
+        }"
+      >
+        <td>{{ product.id }}</td>
+        <td>{{ product.productName }}</td>
+        <td>{{ product.productCode }}</td>
+        <td>{{ product.availableQuantity }}</td>
+        <td>{{ product.buyingPrice | currency }}</td>
+        <td>{{ product.sellingPrice | currency }}</td>
+        <td>{{ product.reorderLevel }}</td>
+        <td>
+          <button
+            class="btn btn-sm btn-warning me-1"
+            [routerLink]="['/productForm', product.id]"
+          >
+            Edit
+          </button>
+          <button
+            class="btn btn-sm btn-danger"
+            (click)="delete(product.id)"
+          >
+            Delete
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <nav *ngIf="totalPages > 1" aria-label="Page navigation">
+    <ul class="pagination justify-content-center">
+      <li
+        class="page-item"
+        [class.disabled]="currentPage === 1"
+        (click)="changePage(currentPage - 1)"
+      >
+        <a class="page-link" href="javascript:void(0)">Previous</a>
+      </li>
+
+      <li
+        class="page-item"
+        *ngFor="let page of [].constructor(totalPages); let i = index"
+        [class.active]="currentPage === i + 1"
+        (click)="changePage(i + 1)"
+      >
+        <a class="page-link" href="javascript:void(0)">{{ i + 1 }}</a>
+      </li>
+
+      <li
+        class="page-item"
+        [class.disabled]="currentPage === totalPages"
+        (click)="changePage(currentPage + 1)"
+      >
+        <a class="page-link" href="javascript:void(0)">Next</a>
+      </li>
+    </ul>
+  </nav>
+</div>
