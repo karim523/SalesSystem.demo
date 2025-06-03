@@ -36,7 +36,7 @@ export class InvoicesComponent implements OnInit {
     private invoiceService: InvoicesService,
     private productService: ProductsService,
     private toastr: ToastrService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.loadInvoices();

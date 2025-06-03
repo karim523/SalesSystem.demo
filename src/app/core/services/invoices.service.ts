@@ -12,19 +12,20 @@ export class InvoicesService {
   private readonly baseUrl = `${environment.baseUrl}Invoices`;
 
   getAllInvoices(): Observable<any> {
-    return this._http.get(`${this.baseUrl}`);
+    return this._http.get(`${this.baseUrl}/all`);
   }
 
   getInvoiceById(id: number): Observable<any> {
-    return this._http.get(`${this.baseUrl}/${id}`);
+    return this._http.get(`${this.baseUrl}/details/${id}`);
   }
 
   createInvoice(dto: object): Observable<any> {
-    return this._http.post(`${this.baseUrl}`, dto);
+    return this._http.post(`${this.baseUrl}/create`, dto);
   }
 
   searchInvoices(query: string): Observable<any> {
-    return this._http.get(`${this.baseUrl}/search`, {
+    return this._http.get(`${this.baseUrl}/search-by-customer`, {
       params: { query }
     });
-  }}
+  }
+}

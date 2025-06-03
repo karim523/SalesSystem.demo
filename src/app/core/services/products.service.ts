@@ -11,16 +11,15 @@ export class ProductsService {
   private readonly baseUrl = `${environment.baseUrl}Products`;
 
   getAllProducts(): Observable<any> {
-    return this._HttpClient.get(`${this.baseUrl}`);
+    return this._HttpClient.get(`${this.baseUrl}/all`);
   }
 
   getSpecificProduct(id: number): Observable<any> {
-    return this._HttpClient.get(`${this.baseUrl}/${id}`);
+    return this._HttpClient.get(`${this.baseUrl}/details/${id}`);
   }
 
-
   searchProducts(query: string): Observable<any> {
-    return this._HttpClient.get(`${this.baseUrl}/search`, {
+    return this._HttpClient.get(`${this.baseUrl}/search-by-name`, {
       params: { query }
     });
   }
@@ -30,15 +29,14 @@ export class ProductsService {
   }
 
   createProduct(product: object): Observable<any> {
-    return this._HttpClient.post(`${this.baseUrl}`, product);
+    return this._HttpClient.post(`${this.baseUrl}/create`, product);
   }
 
   updateProduct(id: number, product: object): Observable<any> {
-    return this._HttpClient.put(`${this.baseUrl}/${id}`, product);
+    return this._HttpClient.put(`${this.baseUrl}/update/${id}`, product);
   }
 
   deleteProduct(id: number): Observable<any> {
-    return this._HttpClient.delete(`${this.baseUrl}/${id}`);
+    return this._HttpClient.delete(`${this.baseUrl}/delete/${id}`);
   }
-
 }
